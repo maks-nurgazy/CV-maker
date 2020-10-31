@@ -23,7 +23,7 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('app', './assets/app.js')
+    .addEntry('app', './assets/js/app.js')
     //.addEntry('page1', './assets/page1.js')
     //.addEntry('page2', './assets/page2.js')
 
@@ -53,6 +53,15 @@ Encore
         config.corejs = 3;
     })
 
+
+    .configureBabel(function(babelConfig) {
+
+        // no plugins are added by default, but you can add some
+        babelConfig.plugins.push('@babel/plugin-proposal-class-properties');
+    }, {
+
+    })
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -69,6 +78,9 @@ Encore
     // uncomment if you use API Platform Admin (composer req api-admin)
     .enableReactPreset()
     //.addEntry('admin', './assets/admin.js')
+
+
+
 ;
 
 module.exports = Encore.getWebpackConfig();
