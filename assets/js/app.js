@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CVmakerContextProvider from "./contexts/CVmakerContext";
-import Navbar from "./components/Navbar";
+import Drawer from "./components/Drawer";
 import Resume from "./components/Resume";
 
 function App(props) {
     return (
         <CVmakerContextProvider>
-            <Navbar />
-            <Resume />
+            <Drawer />
         </CVmakerContextProvider>
     )
 }
