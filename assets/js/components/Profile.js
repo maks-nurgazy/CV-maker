@@ -88,37 +88,38 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Profile() {
+export default function Profile(props) {
     const classes = useStyles();
+    const {image,jobTitle, firstName,lastName,birthday,experience,stackTechnologies,typeOfEmployment} = props.profile;
     return (
         <Card className={classes.root}>
             <CardContent>
                 <div className={classes.mainContainer}>
                     <div className={classes.leftContainer}>
-                        <Avatar className={classes.profImage} alt="avatar name " src="images/maks.jpg"/>
+                        <Avatar className={classes.profImage} alt="avatar name " src={image}/>
                         <div className={classes.jobTitle}>
-                            <h1>{"Intern PHP"}</h1>
+                            <h1>{jobTitle}</h1>
                         </div>
                     </div>
                     <div className={classes.rightContainer}>
-                        <h2 className={classes.name}>Maksatbek Bolushov</h2>
+                        <h2 className={classes.name}>{`${firstName} ${lastName}`}</h2>
                         <div className={classes.properties}>
                             <span className={classes.title}>Год рождения</span>
-                            <span className={classes.dep}>16.04.1999</span>
+                            <span className={classes.dep}>{birthday}</span>
                         </div>
                         <div className={classes.properties}>
-                            <span className={classes.title}>Навыки и умения</span>
-                            <span className={classes.dep}>Java, Javascript, Python, Node.js, Symfony</span>
+                            <span className={classes.title}>Стек технологий</span>
+                            <span className={classes.dep}>{stackTechnologies.map(e => `${e}✔  `)}</span>
                         </div>
+                        <br/>
                         <div className={classes.properties}>
                             <span className={classes.title}>Опыт работы</span>
-                            <span className={classes.dep}>нет</span>
+                            <span className={classes.dep}>{experience}</span>
                         </div>
                         <div className={classes.properties}>
                             <span className={classes.title}>Тип занятости</span>
-                            <span className={classes.dep}>Совмещение</span>
+                            <span className={classes.dep}>{typeOfEmployment}</span>
                         </div>
-
                     </div>
                 </div>
             </CardContent>

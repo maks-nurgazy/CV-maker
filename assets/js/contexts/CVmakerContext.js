@@ -7,7 +7,18 @@ class CVmakerContextProvider extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            resumes : [],
+             resumes : [{
+                image: "images/maks.jpg",
+                jobTitle: "Intern PHP",
+                firstName: "Maksatbek",
+                lastName: "Bolushov",
+                email: "maksatbek.bolushov@gmail.com",
+                address: "Bishkek",
+                stackTechnologies: ["PHP", "Symfony", "JavaScript", "ReactJS"],
+                birthday: "16.04.1999",
+                experience: "Growave software company",
+                typeOfEmployment: "совмещение"
+            }],
         };
     }
 
