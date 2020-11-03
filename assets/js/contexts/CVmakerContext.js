@@ -1,4 +1,5 @@
 import React, {Component, createContext} from 'react';
+import axios from 'axios';
 
 export const CVmakerContext = createContext();
 
@@ -20,6 +21,7 @@ class CVmakerContextProvider extends Component {
                 typeOfEmployment: "совмещение"
             }],
         };
+        this.readCV();
     }
 
     // create
@@ -28,7 +30,14 @@ class CVmakerContextProvider extends Component {
     };
     // read
     readCV = () => {
-
+        axios.get('/api/resume/read')
+            .then(response =>{
+                this.setState({
+                    resumes : response.data
+                })
+            }).catch(error=>{
+                console.log(error);
+        })
     };
     // update
 

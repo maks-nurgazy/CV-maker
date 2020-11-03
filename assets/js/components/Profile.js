@@ -96,7 +96,7 @@ export default function Profile(props) {
             <CardContent>
                 <div className={classes.mainContainer}>
                     <div className={classes.leftContainer}>
-                        <Avatar className={classes.profImage} alt="avatar name " src={image}/>
+                        <Avatar className={classes.profImage} alt="avatar name " src={image==undefined?"df":"fh"}/>
                         <div className={classes.jobTitle}>
                             <h1>{jobTitle}</h1>
                         </div>
@@ -109,7 +109,7 @@ export default function Profile(props) {
                         </div>
                         <div className={classes.properties}>
                             <span className={classes.title}>Стек технологий</span>
-                            <span className={classes.dep}>{stackTechnologies.map(e => `${e}✔  `)}</span>
+                            {/*<span className={classes.dep}>{stackTechnologies.map(e => `${e}✔  `)}</span>*/}
                         </div>
                         <br/>
                         <div className={classes.properties}>
