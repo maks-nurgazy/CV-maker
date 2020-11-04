@@ -6,6 +6,8 @@ use App\Repository\ResumeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @ORM\Entity(repositoryClass=ResumeRepository::class)
@@ -71,8 +73,13 @@ class Resume
 
     /**
      * @ORM\ManyToMany(targetEntity=StackTechnology::class, inversedBy="resumes")
+     * @JoinTable(name="resume_stack_technology",
+     *     joinColumns={@JoinColumn(name="resume_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="stack_technology_id", referencedColumnName="id")}
+     * )
      */
     private $stackTechnologies;
+
 
     public function __construct()
     {
@@ -198,8 +205,9 @@ class Resume
         return ['id' => $this->id, 'firstName'=>$this->firstName,
             'lastName'=>$this->lastName,'address'=>$this->address
             ,'email'=>$this->email, 'jobTitle'=>$this->jobTitle,
-            'typeOfEmployment'=>$this->typeOfEmployment,
-            'birthday'=>$this->birthday,'phone'=>$this->phone];
+            'typeOfEmployment'=>$this->typeOfEmployment,'experience'=>$this->experience,
+            'birthday'=>$this->birthday,'phone'=>$this->phone,
+            'image'=>$this->image];
     }
 
     public function getImage(): ?string

@@ -33,9 +33,15 @@ class ResumeController extends AbstractController
 
         $arrayOfResumes = [];
         foreach ($resumes as $resume){
-            $arrayOfResumes[] = $resume->toArray();
+            $stackTechnologies = $resume->getStackTechnologies();
+            $arrayOfTechnology = [];
+            foreach ($stackTechnologies as $technology){
+                $arrayOfTechnology[] = $technology->getName();
+            }
+            $resumeArray = $resume->toArray();
+            $resumeArray['stackTechnologies'] = $arrayOfTechnology;
+            $arrayOfResumes[] = $resumeArray;
         }
         return $this->json($arrayOfResumes);
-
     }
 }
