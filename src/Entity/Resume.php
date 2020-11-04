@@ -235,7 +235,6 @@ class Resume
         if (!$this->stackTechnologies->contains($stackTechnology)) {
             $this->stackTechnologies[] = $stackTechnology;
         }
-
         return $this;
     }
 
