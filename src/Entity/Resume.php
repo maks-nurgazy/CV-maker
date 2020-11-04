@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ResumeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,14 +65,20 @@ class Resume
     private $jobTitle;
 
     /**
-     * @ORM\Column(type="blob", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $image;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\ManyToMany(targetEntity=StackTechnology::class, inversedBy="resumes")
      */
-    private $stackTechnologies = [];
+    private $stackTechnologies;
+
+    public function __construct()
+    {
+        $this->stackTechnologies = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -185,30 +193,6 @@ class Resume
         return $this;
     }
 
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    public function setImage($image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getStackTechnologies(): ?array
-    {
-        return $this->stackTechnologies;
-    }
-
-    public function setStackTechnologies(array $stackTechnologies): self
-    {
-        $this->stackTechnologies = $stackTechnologies;
-
-        return $this;
-    }
-
     public function toArray()
     {
         return ['id' => $this->id, 'firstName'=>$this->firstName,
@@ -216,7 +200,42 @@ class Resume
             ,'email'=>$this->email, 'jobTitle'=>$this->jobTitle,
             'typeOfEmployment'=>$this->typeOfEmployment,
             'birthday'=>$this->birthday,'phone'=>$this->phone];
-//            'image'=>$this->image,'stackTechnologies'=>$this->stackTechnologies];
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StackTechnology[]
+     */
+    public function getStackTechnologies(): Collection
+    {
+        return $this->stackTechnologies;
+    }
+
+    public function addStackTechnology(StackTechnology $stackTechnology): self
+    {
+        if (!$this->stackTechnologies->contains($stackTechnology)) {
+            $this->stackTechnologies[] = $stackTechnology;
+        }
+
+        return $this;
+    }
+
+    public function removeStackTechnology(StackTechnology $stackTechnology): self
+    {
+        $this->stackTechnologies->removeElement($stackTechnology);
+
+        return $this;
     }
 
 
