@@ -88,11 +88,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile(props) {
+export default function Profile({ profile }) {
   const classes = useStyles();
   const {
     image, jobTitle, firstName, lastName, birthday, experience, stackTechnologies, typeOfEmployment,
-  } = props.profile;
+  } = profile;
   return (
       <Card className={classes.root}>
           <CardContent>

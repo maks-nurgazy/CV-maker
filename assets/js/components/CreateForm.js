@@ -43,16 +43,15 @@ const useStyles = makeStyles(() => ({
 export default function CreateForm() {
   const classes = useStyles();
 
-  const [email, updateEmail, resetEmail] = useInputState('');
-  const [firstName, changeFirstName, resetFirstName] = useInputState('');
-  const [lastName, changeLastName, resetLastName] = useInputState('');
+  const [firstName, updateFirstName] = useInputState('');
+  const [lastName, updateLastName] = useInputState('');
+  const [email, updateEmail] = useInputState('');
+  const [phone, updatePhone] = useInputState('');
+  const [address, updateAddress] = useInputState('');
+  const [jobTitle, updateJobTitle] = useInputState('');
+  const [typeOfEmployment, setTypeOfEmployment] = useInputState('1');
 
-  const [typeOfEmployment, setTypeOfEmployment] = useState('1');
   const [birthday, setBirthday] = useState(new Date('2014-08-18T21:11:54'));
-
-  const handleChange = (event) => {
-    setTypeOfEmployment(event.target.value);
-  };
 
   const handleDateChange = (date) => {
     setBirthday(date);
@@ -68,6 +67,7 @@ export default function CreateForm() {
                             id="outlined-basic"
                             label="Имя"
                             value={firstName}
+                            onChange={updateFirstName}
                             variant="outlined"
                             fullWidth
                           />
@@ -77,6 +77,7 @@ export default function CreateForm() {
                             id="outlined-basic"
                             label="Фамилия"
                             value={lastName}
+                            onChange={updateLastName}
                             variant="outlined"
                             fullWidth
                           />
@@ -87,6 +88,8 @@ export default function CreateForm() {
                             type="tel"
                             id="outlined-basic"
                             label="Номер телефона"
+                            value={phone}
+                            onChange={updatePhone}
                             variant="outlined"
                             fullWidth
                           />
@@ -124,6 +127,8 @@ export default function CreateForm() {
                             margin="normal"
                             id="outlined-basic"
                             label="Адрес"
+                            value={address}
+                            onChange={updateAddress}
                             variant="outlined"
                             fullWidth
                           />
@@ -133,6 +138,8 @@ export default function CreateForm() {
                             margin="normal"
                             id="outlined-basic"
                             label="Желаемая должность"
+                            value={jobTitle}
+                            onChange={updateJobTitle}
                             variant="outlined"
                             fullWidth
                           />
@@ -144,7 +151,7 @@ export default function CreateForm() {
                             select
                             label="Тип занятости"
                             value={typeOfEmployment}
-                            onChange={handleChange}
+                            onChange={setTypeOfEmployment}
                             variant="outlined"
                             fullWidth
                           >
