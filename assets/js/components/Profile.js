@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile(props) {
     const classes = useStyles();
     const {image,jobTitle, firstName,lastName,birthday,experience,stackTechnologies,typeOfEmployment} = props.profile;
-    console.log(stackTechnologies);
     return (
         <Card className={classes.root}>
             <CardContent>

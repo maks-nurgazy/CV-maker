@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import {KeyboardDatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
+import useInputState from "../hooks/useInputState";
 
 const currencies = [
     {
@@ -35,11 +36,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         marginTop: '20px',
-        // '& .MuiTextField-root': {
-        //     margin: theme.spacing(1)
-        // },
-
-
     },
 
 
@@ -49,15 +45,20 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateForm() {
     const classes = useStyles();
 
-    const [currency, setCurrency] = React.useState('1');
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
+
+    const [email, updateEmail, resetEmail] = useInputState("");
+    const [firstName, changeFirstName, resetFirstName] = useInputState("");
+    const [lastName, changeLastName, resetLastName] = useInputState("");
+
+    const [typeOfEmployment, setTypeOfEmployment] = useState('1');
+    const [birthday, setBirthday] = useState(new Date('2014-08-18T21:11:54'));
 
     const handleChange = (event) => {
-        setCurrency(event.target.value);
+        setTypeOfEmployment(event.target.value);
     };
 
     const handleDateChange = (date) => {
-        setSelectedDate(date);
+        setBirthday(date);
     };
 
 
@@ -67,10 +68,16 @@ export default function CreateForm() {
                 <form noValidate autoComplete="off">
                     <Grid container spacing={1}>
                         <Grid item sm={6} xs={12}>
-                            <TextField id="outlined-basic" label="Имя" variant="outlined" fullWidth={true}/>
+                            <TextField id="outlined-basic"
+                                       label="Имя"
+                                       value={firstName}
+                                       variant="outlined"
+                                       fullWidth={true}
+                            />
                         </Grid>
                         <Grid item sm={6} xs={12}>
-                            <TextField id="outlined-basic" label="Фамилия" variant="outlined" fullWidth={true}/>
+                            <TextField id="outlined-basic" label="Фамилия" value={lastName} variant="outlined"
+                                       fullWidth={true}/>
                         </Grid>
                         <Grid item sm={6} xs={12}>
                             <TextField margin={"normal"} type="tel" id="outlined-basic" label="Номер телефона"
@@ -84,7 +91,7 @@ export default function CreateForm() {
                                     id="date-picker-dialog"
                                     label="День рождения"
                                     format="MM/dd/yyyy"
-                                    value={selectedDate}
+                                    value={birthday}
                                     onChange={handleDateChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
@@ -93,7 +100,8 @@ export default function CreateForm() {
                             </MuiPickersUtilsProvider>
                         </Grid>
                         <Grid item md={12} xs={12}>
-                            <TextField margin={"normal"} type="email" id="outlined-basic" label="Email"
+                            <TextField margin={"normal"} type="email" value={email} onChange={updateEmail}
+                                       id="outlined-basic" label="Email"
                                        variant="outlined" fullWidth={true}/>
                         </Grid>
                         <Grid item md={12} xs={12}>
@@ -110,7 +118,7 @@ export default function CreateForm() {
                                 id="outlined-select-type-of-employment"
                                 select
                                 label="Тип занятости"
-                                value={currency}
+                                value={typeOfEmployment}
                                 onChange={handleChange}
                                 variant="outlined"
                                 fullWidth={true}
