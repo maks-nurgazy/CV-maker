@@ -98,7 +98,7 @@ export default function Profile({ profile }) {
           <CardContent>
               <div className={classes.mainContainer}>
                   <div className={classes.leftContainer}>
-                      <Avatar className={classes.profImage} alt="avatar name " src={`images/${image}`} />
+                      <Avatar className={classes.profImage} alt="avatar name " src={`uploads/avatar_image/${image}`} />
                       <div className={classes.jobTitle}>
                           <h1>{jobTitle}</h1>
                       </div>

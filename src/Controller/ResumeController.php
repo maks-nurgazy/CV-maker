@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\StackTechnology;
 use App\Repository\ResumeRepository;
+use App\Entity\Resume;
 use App\Service\UploaderHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
@@ -55,28 +57,37 @@ class ResumeController extends AbstractController
     public function write(Request $request, UploaderHelper $uploaderHelper):Response
     {
 
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $resume = new Resume();
+        $stackTechnology = new StackTechnology();
+
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("avatarImage");
 
+
         if ($uploadedFile){
             $newFilename = $uploaderHelper->uploadAvatarImage($uploadedFile);
+            $resume->setImage($newFilename);
         }
+        $resume->setFirstName($request->get("firstName"));
+        $resume->setLastName($request->get("lastName"));
+        $resume->setPhone($request->get("phone"));
+        $resume->setEmail($request->get("email"));
+        $resume->setBirthday("16/04/1999");
+        $resume->setAddress($request->get("address"));
+        $resume->setExperience("Yes");
+        $resume->setJobTitle($request->get("jobTitle"));
+        $resume->setTypeOfEmployment($request->get("typeOfEmployment"));
+        $stackTechnology->setName("Music");
+        $stackTechnology->addResume($resume);
 
+        $entityManager->persist($resume);
+        $entityManager->persist($stackTechnology);
 
-//        $data = [
-//            "firstName"=>$request->get("firstName"),
-//            "lastName"=>$request->get("lastName"),
-//            "birthday"=>$request->get("birthday"),
-//            "email"=>$request->get("email"),
-//            "phone"=>$request->get("phone"),
-//            "address"=>$request->get("address"),
-//            "jobTitle"=>$request->get("jobTitle"),
-//            "typeOfEmployment"=>$request->get("typeOfEmployment"),
-//            "avatarImage"=>$request->get("avatarImage")->getData(),
-//        ];
+        $entityManager->flush();
 
-        return $this->json(["hello"=>"maks"]);
+        return $this->json(["success"=>"saved"]);
     }
-
 
 }
