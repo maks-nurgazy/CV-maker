@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios';
 
 import useInputState from '../hooks/useInputState';
 import useImageState from '../hooks/useImageState';
@@ -41,44 +42,71 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: '20px',
   },
-  container:{
-    marginBottom:"50px"
+  container: {
+    marginBottom: '50px',
   },
-  avatar:{
-    display:"flex",
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:"20px",
+  avatar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '20px',
   },
-  avatarImage:{
+  avatarImage: {
     width: theme.spacing(20),
     height: theme.spacing(20),
-  }
+  },
 
 }));
 
 export default function CreateForm() {
   const classes = useStyles();
 
-  const [firstName, updateFirstName] = useInputState('');
-  const [lastName, updateLastName] = useInputState('');
-  const [email, updateEmail] = useInputState('');
-  const [phone, updatePhone] = useInputState('');
-  const [address, updateAddress] = useInputState('');
-  const [jobTitle, updateJobTitle] = useInputState('');
-  const [typeOfEmployment, setTypeOfEmployment] = useInputState('1');
+  const [firstName, updateFirstName] = useInputState('Maksatbek');
+  const [lastName, updateLastName] = useInputState('Bolushov');
+  const [email, updateEmail] = useInputState('maksatbek.bolushov');
+  const [phone, updatePhone] = useInputState('0777434530');
+  const [address, updateAddress] = useInputState('Bishkek');
+  const [jobTitle, updateJobTitle] = useInputState('Intern PHP');
+  const [typeOfEmployment, setTypeOfEmployment] = useInputState('4');
 
-  const [birthday, setBirthday] = useState(new Date('2014-08-18T21:11:54'));
-  const [avatarImage, setAvatarImage, imageUrl] = useImageState("");
+  const [birthday, setBirthday] = useState(new Date('1999-04-16'));
+  const [avatarImage, setAvatarImage, imageUrl] = useImageState('');
 
   const handleDateChange = (date) => {
     setBirthday(date);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append('avatarImage', avatarImage);
+    data.append('firstName', firstName);
+    data.append('lastName', lastName);
+    data.append('birthday', birthday);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('address', address);
+    data.append('jobTitle', jobTitle);
+    data.append('typeOfEmployment', typeOfEmployment);
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+
+    axios.post('https://127.0.0.1:8000/api/resume/post', data, config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => alert("File Upload Error"));
+  };
+
   return (
       <div className={classes.root}>
           <Container maxWidth="md" className={classes.container}>
-              <form noValidate autoComplete="off">
+              <form noValidate autoComplete="off" onSubmit={handleSubmit} >
                   <Grid container spacing={1}>
                       <Grid item sm={6} xs={12}>
                           <TextField
@@ -201,15 +229,16 @@ export default function CreateForm() {
 
                       </Grid>
                       <Grid item sm={6} xs={12}>
-                        <div className={classes.avatar}>
-                          <Avatar alt="Avatar image" src={imageUrl} className={classes.avatarImage}/>
-                        </div>
+                          <div className={classes.avatar}>
+                              <Avatar alt="Avatar image" src={imageUrl} className={classes.avatarImage} />
+                          </div>
                       </Grid>
                       <Grid item sm={12} xs={12}>
                           <Button
                             variant="contained"
                             color="primary"
                             fullWidth
+                            type="submit"
                           >
                               Submit
                           </Button>
