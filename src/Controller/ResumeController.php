@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\ResumeRepository;
+use App\Service\UploaderHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,17 +52,16 @@ class ResumeController extends AbstractController
     /**
      * @Route("/post", name="api_resume_post", methods={"POST"})
      */
-    public function write(Request $request):Response
+    public function write(Request $request, UploaderHelper $uploaderHelper):Response
     {
 
         /** @var UploadedFile $uploadedFile */
         $uploadedFile = $request->files->get("avatarImage");
-        $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
 
-        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-        $newFilename = Urlizer::$originalFilename.'-'.uniqid().'-'.$uploadedFile->guessExtension();
+        if ($uploadedFile){
+            $newFilename = $uploaderHelper->uploadAvatarImage($uploadedFile);
+        }
 
-        dump($uploadedFile->move($destination,$newFilename));
 
 //        $data = [
 //            "firstName"=>$request->get("firstName"),
