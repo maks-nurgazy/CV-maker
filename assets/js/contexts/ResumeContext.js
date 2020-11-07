@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 import axios from 'axios';
 
-export const CVmakerContext = createContext();
+export const ResumeContext = createContext();
 
 class CVmakerContextProvider extends Component {
   constructor(props, context) {
@@ -9,7 +9,6 @@ class CVmakerContextProvider extends Component {
     this.state = {
       resumes: [],
     };
-    this.readCV();
   }
 
     // create
@@ -34,14 +33,14 @@ class CVmakerContextProvider extends Component {
 
     render() {
       return (
-          <CVmakerContext.Provider value={{
+          <ResumeContext.Provider value={{
             ...this.state,
             createCV: this.createCV,
             readCV: this.readCV(),
           }}
           >
               {this.props.children}
-          </CVmakerContext.Provider>
+          </ResumeContext.Provider>
       );
     }
 }

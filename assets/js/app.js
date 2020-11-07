@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter, Redirect, Route, Switch,
 } from 'react-router-dom';
-import CVmakerContextProvider from './contexts/CVmakerContext';
+import CVmakerContextProvider from './contexts/ResumeContext';
 import Drawer from './components/Drawer';
 import NotFound from './components/NotFound';
 import CreateForm from './components/CreateForm';

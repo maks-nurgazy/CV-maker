@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import { Link } from 'react-router-dom';
 import Resume from './Resume';
 
 const drawerWidth = 240;
@@ -131,12 +132,14 @@ export default function PersistentDrawerLeft() {
               <Divider />
               <List>
                   {['Create CV'].map((text) => (
-                      <ListItem button key={text}>
-                          <ListItemIcon>
-                              <AddBoxIcon />
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                      </ListItem>
+                      <Link to="/resumes/create" key={text}>
+                          <ListItem button>
+                              <ListItemIcon>
+                                  <AddBoxIcon />
+                              </ListItemIcon>
+                              <ListItemText primary={text} />
+                          </ListItem>
+                      </Link>
                   ))}
               </List>
           </Drawer>
