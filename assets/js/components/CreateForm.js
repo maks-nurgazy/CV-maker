@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -10,31 +10,11 @@ import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/picker
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
 
+import { useHistory } from 'react-router-dom';
 import useInputState from '../hooks/useInputState';
 import useImageState from '../hooks/useImageState';
-
-const arrayEmploymentType = [
-  {
-    value: '1',
-    label: 'не имеет значения',
-  },
-  {
-    value: '2',
-    label: 'полный рабочий день',
-  },
-  {
-    value: '3',
-    label: 'неполный рабочий день',
-  },
-  {
-    value: '4',
-    label: 'частичная занятость / совмещение',
-  },
-  {
-    value: '5',
-    label: 'удаленная работа / freelance',
-  },
-];
+import { ResumeContext } from '../contexts/ResumeContext';
+import { arrayEmploymentType } from '../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -60,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateForm() {
   const classes = useStyles();
+  const context = useContext(ResumeContext);
+  const history = useHistory();
 
   const [firstName, updateFirstName] = useInputState('Maksatbek');
   const [lastName, updateLastName] = useInputState('Bolushov');
@@ -90,23 +72,15 @@ export default function CreateForm() {
     data.append('jobTitle', jobTitle);
     data.append('typeOfEmployment', typeOfEmployment);
 
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    }
+    context.createCV(data);
 
-    axios.post('https://127.0.0.1:8000/api/resume/post', data, config)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => alert("File Upload Error"));
+    history.push('/resumes');
   };
 
   return (
       <div className={classes.root}>
           <Container maxWidth="md" className={classes.container}>
-              <form noValidate autoComplete="off" onSubmit={handleSubmit} >
+              <form noValidate autoComplete="off" onSubmit={handleSubmit}>
                   <Grid container spacing={1}>
                       <Grid item sm={6} xs={12}>
                           <TextField

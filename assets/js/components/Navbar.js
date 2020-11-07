@@ -71,7 +71,7 @@ export default function Navbar() {
               <Toolbar>
                   <Typography className={classes.title} variant="h6" noWrap>
                       <NavLink to="/resumes">
-                          Growave
+                          Maks
                       </NavLink>
                   </Typography>
                   <div className={classes.search}>

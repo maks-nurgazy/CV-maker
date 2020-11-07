@@ -3,15 +3,23 @@ import axios from 'axios';
 
 export const ResumeContext = createContext();
 
-export default function CVmakerContextProvider(props) {
+export default function ResumeContextProvider(props) {
   const [resumes, setResumes] = useState([]);
 
-  // create
-  const createCV = () => {
+  const createCV = (data) => {
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
 
+    axios.post('https://127.0.0.1:8000/api/resume/post', data, config)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch(() => alert('File Upload Error'));
   };
 
-  // read
   const readCV = () => {
     axios.get('/api/resume/read')
       .then((response) => {
@@ -20,9 +28,6 @@ export default function CVmakerContextProvider(props) {
         console.log(error);
       });
   };
-    // update
-
-  // delete
 
   return (
       <ResumeContext.Provider value={{

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import {
   BrowserRouter, Redirect, Route, Switch,
 } from 'react-router-dom';
-import CVmakerContextProvider from './contexts/ResumeContext';
-import Drawer from './components/Drawer';
+import ResumeContextProvider from './contexts/ResumeContext';
+import ResumeList from './components/ResumeList';
 import NotFound from './components/NotFound';
 import CreateForm from './components/CreateForm';
 import '../styles/app.css';
@@ -14,12 +14,14 @@ function App() {
       <BrowserRouter>
           <Switch>
               <Redirect exact from="/" to="/resumes" />
-              <Route
-                exact
-                path="/resumes"
-                component={() => <CVmakerContextProvider><Drawer /></CVmakerContextProvider>}
-              />
-              <Route exact path="/resumes/create" component={CreateForm} />
+              <Route exact path="/resumes">
+                  <ResumeContextProvider>
+                      <ResumeList />
+                  </ResumeContextProvider>
+              </Route>
+              <Route exact path="/resumes/create">
+                  <ResumeContextProvider><CreateForm /></ResumeContextProvider>
+              </Route>
               <Route component={NotFound} />
           </Switch>
       </BrowserRouter>
