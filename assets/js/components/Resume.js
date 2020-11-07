@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { v4 as uuid } from 'uuid';
@@ -7,6 +7,10 @@ import { ResumeContext } from '../contexts/ResumeContext';
 
 export default function Resume() {
   const context = useContext(ResumeContext);
+
+  useEffect(() => {
+    context.readCV();
+  }, []);
 
   return (
       <>
